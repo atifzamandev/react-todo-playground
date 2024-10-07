@@ -16,12 +16,16 @@ const useTodos = () => {
     return (await response).data;
   };
 
-  const query =   useQuery({
-    queryKey:['todos'],
-    queryFn: fetchTodos 
-  })
+  const query = useQuery<Todo[], Error>({
+    queryKey: ["todos"],
+    queryFn: fetchTodos,
+    staleTime: Infinity,
+    refetchOnMount: false,
+    refetchOnReconnect: false,
+    refetchOnWindowFocus: false,
+  });
 
-  return query
+  return query;
 };
 
 export default useTodos;
