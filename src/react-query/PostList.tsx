@@ -1,13 +1,17 @@
 import { useState } from "react";
 import usePostList from "../hooks/usePostList";
+import React from "react";
+
+const pageSize = 10;
 
 const PostList = () => {
-  const [userId, setUserId] = useState<number | undefined>();
   const {
     data: posts,
     error,
     isLoading: isPostListLoading,
-  } = usePostList(userId);
+    fetchNextPage,
+    isFetchingNextPage,
+  } = usePostList({ pageSize });
 
   if (isPostListLoading) return <p>Loading...</p>;
 
@@ -15,25 +19,25 @@ const PostList = () => {
 
   return (
     <>
-      <select
-        className="form-select mb-3"
-        onChange={(event) =>
-          setUserId(parseInt(event.target.value) || undefined)
-        }
-        value={userId}
-      >
-        <option value=""></option>
-        <option value="1">User 1</option>
-        <option value="2">User 2</option>
-        <option value="3">User 3</option>
-      </select>
       <ul className="list-group">
-        {posts?.map((post) => (
-          <li key={post.id} className="list-group-item">
-            {post.title}
-          </li>
+        {posts?.pages.map((page, index) => (
+          <React.Fragment key={index}>
+            {page?.map((post) => (
+              <li key={post.id} className="list-group-item">
+                {post.title}
+              </li>
+            ))}
+          </React.Fragment>
         ))}
       </ul>
+
+      <button
+        className="btn btn-primary my-3 ms-3"
+        onClick={() => fetchNextPage()}
+        disabled={isFetchingNextPage}
+      >
+        {isFetchingNextPage ? "Loading..." : "Load More"}
+      </button>
     </>
   );
 };
