@@ -1,30 +1,48 @@
+import { NavLink } from 'react-router-dom'
+import LoginStatus from '../state-management/auth/LoginStatus'
+import useCounterStore from '../state-management/counter/store'
+
 const NavBar = () => {
+  const counter = useCounterStore((state) => state.count)
+
   return (
-    <nav
-      className="navbar navbar-expand-lg"
-      style={{ background: '#f0f0f0', marginBottom: '1rem' }}
-    >
-      <div className="container-fluid">
-        <a className="navbar-brand" href="#">
-          My App
+    <>
+      <nav className='navbar d-flex justify-content-between'>
+        <span className='badge text-bg-secondary'></span>
+      </nav>
+
+      <nav className='navbar navbar-expand-lg navbar-light bg-light'>
+        <a className='navbar-brand' href='#'>
+          React Todo Playground
         </a>
-        <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav">
-            <li className="nav-item">
-              <a className="nav-link active" href="#">
+
+        <span className='badge text-bg-secondary'>{counter}</span>
+
+        <div className='collapse navbar-collapse' id='navbarNav'>
+          <ul className='navbar-nav'>
+            <li className='nav-item active'>
+              <NavLink className='nav-link' to='/'>
                 Home
-              </a>
+              </NavLink>
             </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">
+            <li className='nav-item'>
+              <NavLink className='nav-link' to='/users'>
                 Users
-              </a>
+              </NavLink>
+            </li>
+            <li className='nav-item'>
+              <NavLink className='nav-link' to='/contact'>
+                Contact Us
+              </NavLink>
             </li>
           </ul>
         </div>
-      </div>
-    </nav>
-  );
-};
+        <div className='me-4'>
+          <LoginStatus />
+        </div>
+      </nav>
+    </>
+  )
+}
 
-export default NavBar;
+export default NavBar

@@ -1,8 +1,9 @@
 import "./App.css";
-import AuthProvider from "./state-management/auth/AuthProvider";
-import HomePage from "./state-management/HomePage";
-import NavBar from "./state-management/NavBar";
-import { TasksProvider } from "./state-management/tasks";
+import HomePage from "./routing/HomePage";
+import NavBar from "./routing/NavBar";
+import LoginStatus from "./state-management/auth/LoginStatus";
+import Counter from "./state-management/counter/Counter";
+import { TaskList, TasksProvider } from "./state-management/tasks";
 
 function App() {
   return (
@@ -10,14 +11,13 @@ function App() {
       {/* <Counter /> */}
       {/* <TodoForm />
       <TodoList />; */}
-      {/* <TaskList /> */}
-      {/* <LoginStatus/> */}
-      <AuthProvider>
-        <TasksProvider>
-          <NavBar />
-          <HomePage />
-        </TasksProvider>
-      </AuthProvider>
+      {/* <LoginStatus /> */}
+      <TasksProvider>
+        <Counter />
+        <TaskList />
+        <NavBar />
+        <HomePage />
+      </TasksProvider>
     </>
   );
 
